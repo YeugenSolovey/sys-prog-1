@@ -1,0 +1,3 @@
+﻿  index.c
+C:\Users\choom\OneDrive\Рабочий стол\sp\sp\index.c(9,17): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  sp.vcxproj -> C:\Users\choom\OneDrive\Рабочий стол\sp\x64\Debug\sp.exe
