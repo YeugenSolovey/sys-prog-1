@@ -1,12 +1,12 @@
-﻿#include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#pragma warning (disable : 4996)
+#pragma warning(disable: 4996)
 
 double calculateChastka(const char* word) {
     int count = 0;
-    int lenth = strlen(word);
+    int length = strlen(word);
 
     for (int i = 0; word[i] != '\0'; i++) {
         if (isalpha(word[i])) {
@@ -17,12 +17,12 @@ double calculateChastka(const char* word) {
         }
     }
 
-    return (double)count / lenth;
+    return (double)count / length;
 }
 
 int sorFunk(const void* a, const void* b) {
     const char* aWord = *(const char**)a;
-    const char* bWord= *(const char**)b;
+    const char* bWord = *(const char**)b;
 
     double calculateA = calculateChastka(aWord);
     double calculateB = calculateChastka(bWord);
@@ -47,26 +47,32 @@ int main() {
     char** words = (char**)malloc(wordCapacity * sizeof(char*));
 
     while (fscanf(inputFile, "%s", buffer) != EOF) {
-        if (wordCount == wordCapacity) {
-            wordCapacity += 1;
-            char** newWords = (char**)realloc(words, wordCapacity * sizeof(char*));
-            if (!newWords) {
+        char* notLetter = strtok(buffer, "()+-`'");
+
+        while (notLetter != NULL) {
+            if (wordCount == wordCapacity) {
+                wordCapacity += 1;
+                char** newWords = (char**)realloc(words, wordCapacity * sizeof(char*));
+                if (!newWords) {
+                    printf("ERROR\n");
+                    return 1;
+                }
+                words = newWords;
+            }
+
+            words[wordCount] = strdup(notLetter);
+            if (!words[wordCount]) {
                 printf("ERROR\n");
                 return 1;
             }
-            words = newWords;
-        }
 
-        words[wordCount] = strdup(buffer);
-        if (!words[wordCount]) {
-            printf("ERROR\n");
-            return 1;
-        }
+            wordCount++;
 
-        wordCount++;
+            notLetter = strtok(NULL, "()+-`'");
+        }
     }
 
-    
+
 
     qsort(words, wordCount, sizeof(char*), sorFunk);
 
