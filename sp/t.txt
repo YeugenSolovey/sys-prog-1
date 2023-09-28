@@ -1,6 +1,0 @@
-11231
-dword
-iword
-eword
-wase3d
-aword
